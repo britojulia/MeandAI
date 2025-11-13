@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    container_name: meandai
+    environment:
+      - 'POSTGRES_DB=meandai'
+      - 'POSTGRES_PASSWORD=meandai'
+      - 'POSTGRES_USER=meandai'
+    ports:
+      - '5432:5432'
