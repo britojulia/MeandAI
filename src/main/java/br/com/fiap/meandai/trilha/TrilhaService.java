@@ -10,7 +10,7 @@ public class TrilhaService {
     private TrilhaService  trilhaService;
 
     public TrilhaService(TrilhaRepository trilhaRepository) {
-        this.trilhaService = new TrilhaService(trilhaRepository);
+        this.trilhaService = trilhaService;
     }
 
     public List<Trilha> getAllTrilhas(){

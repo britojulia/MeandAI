@@ -5,4 +5,8 @@ public class TypesEnum {
     public enum NivelSkill {
         INICIANTE, INTERMEDIARIO, AVANÇADO
     }
+
+    public enum UserRole{
+            ADMIN, USER
+    }
 }
