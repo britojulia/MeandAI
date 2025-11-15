@@ -20,7 +20,8 @@ public class Trilha {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String titulo; // Ex: "Trilha de Transição para Tech"
+    private String titulo;
+    private String descricao;// Ex: "Trilha de Transição para Tech"
     private LocalDate dataCriacao;
 
     @ManyToOne
@@ -28,4 +29,7 @@ public class Trilha {
 
     @OneToMany(mappedBy = "trilha", cascade = CascadeType.ALL)
     private List<Etapa> etapas;
+
+    @Transient
+    private List<String> etapasForm; // recebe os nomes do formulário
 }

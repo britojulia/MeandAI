@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+
+    <meta charset="UTF-8">
+    <title>Me and AI</title>
+</head>
+<body class="flex flex-col min-h-screen">
+
+<div th:replace="fragments/layout :: header"></div>
+
+<div class="max-w-xl mx-auto p-6">
+
+    <h1 class="text-3xl font-bold mb-6">Criar seu Perfil</h1>
+
+    <form action="/user" method="post" class="flex flex-col gap-4">
+
+        <input type="text" name="nome"
+               placeholder="Seu nome"
+               class="input input-bordered w-full" required>
+
+        <input type="text" name="areaAtual"
+               placeholder="Sua área atual (ex: Marketing)"
+               class="input input-bordered w-full" required>
+
+        <input type="text" name="objetivo"
+               placeholder="Objetivo profissional (ex: Análise de Dados)"
+               class="input input-bordered w-full" required>
+
+        <button class="btn btn-primary w-full">Salvar Perfil</button>
+    </form>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

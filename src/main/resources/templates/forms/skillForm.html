@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+
+  <meta charset="UTF-8">
+  <title>Me and AI</title>
+</head>
+<body class="flex flex-col min-h-screen">
+
+<div th:replace="fragments/layout :: header"></div>
+
+<div class="max-w-xl mx-auto p-6">
+
+  <h1 class="text-2xl font-bold mb-4">Adicionar Skill</h1>
+
+  <form th:action="@{'/skill?userId=' + ${userId}}" method="post" class="flex flex-col gap-4">
+    <input type="text" name="nome"
+           placeholder="Ex: Excel, Comunicação, SQL"
+           class="input input-bordered w-full"
+           required />
+
+    <button class="btn btn-success w-full">Salvar Skill</button>
+  </form>
+
+  <a th:href="@{'/trilha/form/' + ${userId}}" class="btn btn-outline w-full mt-4">
+    Continuar para gerar trilha →
+  </a>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="lofi">
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+
+  <meta charset="UTF-8">
+  <title>Me and AI</title>
+</head>
+<body class="flex flex-col min-h-screen">
+
+<div th:replace="fragments/layout :: header"></div>
+
+<div class="max-w-3xl mx-auto p-6">
+
+  <h1 class="text-3xl font-bold mb-4">Detalhes da Trilha</h1>
+
+  <p class="text-lg mb-6">
+    Trilha ID: <span class="font-bold" th:text="${trilhaId}"></span>
+  </p>
+
+  <a href="/" class="btn btn-primary">Voltar</a>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

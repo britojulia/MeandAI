@@ -13,6 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "userAI")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,7 +25,6 @@ public class User {
 
     private String nome;
     private String email;
-    private String senha;
     private String areaAtual; // Ex: "Marketing"
     private String objetivo;  // Ex: "Migrar para Tecnologia"
 
