@@ -35,6 +35,7 @@ public class TrilhaService {
 
         trilha = trilhaRepository.save(trilha);
 
+        //dados mocados
         for (String nome : etapasForm) {
             Etapa etapa = Etapa.builder()
                     .nome(nome)
@@ -46,6 +47,10 @@ public class TrilhaService {
             etapaRepository.save(etapa);
         }
         return trilha;
+    }
+
+    public void deleteById(Long id){
+        trilhaRepository.delete(getTrilhaById(id));
     }
 
     public Trilha getTrilhaById(Long id){

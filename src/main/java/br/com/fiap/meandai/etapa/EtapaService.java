@@ -1,5 +1,6 @@
 package br.com.fiap.meandai.etapa;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,5 +16,15 @@ public class EtapaService {
     
     public List<Etapa> getAllEtapas() {
         return etapaRepository.findAll();
+    }
+
+    public void deleteById(Long id){
+        etapaRepository.delete(getEtapaById(id));
+    }
+
+    private Etapa getEtapaById(Long id){
+        return etapaRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("etapa não encontrado")
+        );
     }
 }

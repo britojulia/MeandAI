@@ -29,6 +29,10 @@ public class SkillService {
         return skillRepository.countByUserId(userId);
     }
 
+    public void deleteById(Long id){
+        skillRepository.delete(getSkillById(id));
+    }
+
 
     public Skill getSkillById(Long id){
         return skillRepository.findById(id).orElseThrow(

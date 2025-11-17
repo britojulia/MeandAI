@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/skill")
@@ -34,16 +35,26 @@ public class SkillController {
 
 
     @PostMapping
-    public String save(@Valid @RequestParam Long userId, Skill skill, Model model) {
+    public String save(@Valid Long userId, Skill skill, RedirectAttributes redirect) {
         skillService.save(skill, userId);
+        redirect.addFlashAttribute("message", "Novo evento cadastrado com sucesso!");
 
         int totalSkills = skillService.countSkillsByUser(userId);
 
+        //validação de no minino 3 skills
         if (totalSkills < 3) {
-            // Ainda precisa adicionar mais skills
             return "redirect:/skill/formSkill/" + userId;
         }
         // Já tem 3 skills, vai para a próxima etapa da trilha
         return "redirect:/trilha/form/" + userId;
     }
+
+    @DeleteMapping("{id}")
+    public String delete(@PathVariable Long id, RedirectAttributes redirect ){
+        skillService.deleteById(id);
+        redirect.addFlashAttribute("message", "skill deletada com sucesso!");
+        return "redirect:/trilha/formSkill/";
+    }
+
+
 }

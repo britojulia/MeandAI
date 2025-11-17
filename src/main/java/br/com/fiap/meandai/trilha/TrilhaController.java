@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -33,9 +34,10 @@ public class TrilhaController {
     public String save( @Valid
             @RequestParam Long userId,
             Trilha trilha,
-            @RequestParam List<String> etapasForm
+            @RequestParam List<String> etapasForm, RedirectAttributes redirect
     ) {
         var criada = trilhaService.createTrilha(trilha, etapasForm, userId);
+        redirect.addFlashAttribute("message", "Novo evento cadastrado com sucesso!");
         return "redirect:/trilha/" + criada.getId();
     }
 
@@ -43,6 +45,13 @@ public class TrilhaController {
     public String detalhes(@PathVariable Long id, Model model) {
         model.addAttribute("trilhaId", id);
         return "trilha";
+    }
+
+    @DeleteMapping("{id}")
+    public String delete(@PathVariable Long id, RedirectAttributes redirect ){
+        trilhaService.deleteById(id);
+        redirect.addFlashAttribute("message", "Trilha deletada com sucesso!");
+        return "redirect:/trilha";
     }
 
 
