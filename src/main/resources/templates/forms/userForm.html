@@ -14,23 +14,23 @@
 
 <div class="max-w-xl mx-auto p-6">
 
-    <h1 class="text-3xl font-bold mb-6">Criar seu Perfil</h1>
+    <h1 class="text-3xl font-bold mb-6" th:text="#{user.create.title}"></h1>
 
     <form action="/user" method="post" class="flex flex-col gap-4">
 
         <input type="text" name="nome"
-               placeholder="Seu nome"
+               th:placeholder="#{user.create.placeholder.name}"
                class="input input-bordered w-full" required>
 
         <input type="text" name="areaAtual"
-               placeholder="Sua área atual (ex: Marketing)"
+               th:placeholder="#{user.create.placeholder.areaAtual}"
                class="input input-bordered w-full" required>
 
         <input type="text" name="objetivo"
-               placeholder="Objetivo profissional (ex: Análise de Dados)"
+               th:placeholder="#{user.create.placeholder.objetivo}"
                class="input input-bordered w-full" required>
 
-        <button class="btn btn-primary w-full">Salvar Perfil</button>
+        <button class="btn btn-primary w-full" th:text="#{save}"></button>
     </form>
 
 </div>
