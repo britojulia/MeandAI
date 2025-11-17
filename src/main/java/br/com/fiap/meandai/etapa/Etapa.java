@@ -2,6 +2,7 @@ package br.com.fiap.meandai.etapa;
 
 import br.com.fiap.meandai.trilha.Trilha;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class Etapa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "nome não pode ser nulo")
     private String nome; // Ex: "Lógica de Programação"
     private String descricao;
     private boolean concluida;

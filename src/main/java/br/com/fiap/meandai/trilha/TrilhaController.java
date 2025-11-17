@@ -1,5 +1,6 @@
 package br.com.fiap.meandai.trilha;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +30,7 @@ public class TrilhaController {
     }
 
     @PostMapping
-    public String save(
+    public String save( @Valid
             @RequestParam Long userId,
             Trilha trilha,
             @RequestParam List<String> etapasForm

@@ -1,4 +1,5 @@
 package br.com.fiap.meandai.user;
+import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping
-    public String save(User user) {
+    public String save(@Valid User user) {
         User savedUser = userService.save(user);
         return "redirect:/skill/formSkill/" + savedUser.getId();
     }

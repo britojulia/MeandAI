@@ -3,6 +3,7 @@ package br.com.fiap.meandai.user;
 import br.com.fiap.meandai.enuns.TypesEnum;
 import br.com.fiap.meandai.trilha.Trilha;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.context.annotation.Role;
 
 import java.util.List;
@@ -25,7 +26,11 @@ public class User {
 
     private String nome;
     private String email;
+
+    @NotBlank(message = "área atual não pode ser nulo")
     private String areaAtual; // Ex: "Marketing"
+
+    @NotBlank(message = "objetivo não pode ser nulo")
     private String objetivo;  // Ex: "Migrar para Tecnologia"
 
     @Enumerated(EnumType.STRING)

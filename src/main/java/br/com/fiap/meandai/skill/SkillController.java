@@ -1,6 +1,7 @@
 package br.com.fiap.meandai.skill;
 
 import br.com.fiap.meandai.trilha.TrilhaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,7 @@ public class SkillController {
 
 
     @PostMapping
-    public String save(@RequestParam Long userId, Skill skill, Model model) {
+    public String save(@Valid @RequestParam Long userId, Skill skill, Model model) {
         skillService.save(skill, userId);
 
         int totalSkills = skillService.countSkillsByUser(userId);
@@ -42,7 +43,7 @@ public class SkillController {
             // Ainda precisa adicionar mais skills
             return "redirect:/skill/formSkill/" + userId;
         }
-        // Já tem 3 skills → vai para a próxima etapa da trilha
+        // Já tem 3 skills, vai para a próxima etapa da trilha
         return "redirect:/trilha/form/" + userId;
     }
 }
