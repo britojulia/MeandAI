@@ -18,9 +18,9 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "nome não pode ser nulo")
+    @NotBlank(message = "{skill.nome.notblank}")
     private String nome;
-    @NotBlank(message = "nível não pode ser nulo")
+    @NotBlank(message = "{skill.nivel.notblank}")
     private String nivel; // Iniciante, Intermediário, Avançado
 
     @ManyToOne

@@ -19,22 +19,20 @@
 
     <!-- conteúdo principal -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold">
-            Olá, <span >Usuário</span> 👋
+        <h1 class="text-3xl font-bold" th:text="#{home.header.hello}">
+             <span >Usuário</span> 👋
         </h1>
-        <p class="text-base-content/70 mt-1">
-            Pronta para evoluir com a IA hoje?
+        <p class="text-base-content/70 mt-1" th:text="#{home.header.ready}">
         </p>
     </div>
 
-    <!-- CARD DE AÇÃO PRINCIPAL -->
+    <!-- card principal-->
     <div class="card bg-primary text-primary-content shadow-xl mb-10 hover:shadow-2xl transition">
         <div class="card-body">
-            <h2 class="card-title text-2xl">Gerar Nova Trilha com IA 🚀</h2>
-            <p>A IA analisa seu perfil e cria uma trilha totalmente personalizada.</p>
+            <h2 class="card-title text-2xl" th:text="#{home.maincard.title}"></h2>
+            <p th:text="#{home.maincard.description}"></p>
             <div class="card-actions justify-end">
-                <a href="user/form" class="btn btn-secondary btn-md">
-                    Criar trilha agora
+                <a href="user/form" class="btn btn-secondary btn-md" th:text="#{home.maincard.button}">
                 </a>
             </div>
         </div>
@@ -46,10 +44,10 @@
         <!-- MINHAS TRILHAS -->
         <div class="card bg-base-100 shadow-md hover:shadow-lg transition">
             <div class="card-body">
-                <h2 class="card-title">Minhas Trilhas</h2>
-                <p>Acompanhe todas as trilhas que a IA já criou para você.</p>
+                <h2 class="card-title" th:text="#{home.trilhas.button}"></h2>
+                <p th:text="#{home.trilhas.description}"></p>
                 <div class="card-actions justify-end">
-                    <a href="/trilhas" class="btn btn-primary btn-sm">Ver trilhas</a>
+                    <a href="/trilhas" class="btn btn-primary btn-sm" th:text="#{home.ia.button}"></a>
                 </div>
             </div>
         </div>
@@ -57,12 +55,11 @@
         <!-- RECOMENDAÇÃO DA IA -->
         <div class="card bg-base-100 shadow-md hover:shadow-lg transition">
             <div class="card-body">
-                <h2 class="card-title">Sugestão da IA 🌟</h2>
+                <h2 class="card-title" th:text="#{home.ia.title}"></h2>
                 <p class="italic text-base-content/80" th:text="${recomendacaoIA}">
-                    “Soft skill recomendada: Pensamento Crítico.”
                 </p>
                 <div class="card-actions justify-end">
-                    <a href="/ai/sugestoes" class="btn btn-primary btn-sm">Ver mais</a>
+                    <a href="/ai/sugestoes" class="btn btn-primary btn-sm" th:text="#{home.ia.button}"></a>
                 </div>
             </div>
         </div>
@@ -81,8 +78,7 @@
 
 
     <!-- FRASE FINAL -->
-    <p class="mt-14 text-center text-base-content/60 text-sm">
-        O futuro do trabalho é colaborativo — você e a IA, lado a lado.
+    <p class="mt-14 text-center text-base-content/60 text-sm" th:text="#{home.footer.phrase}">
     </p>
 
 </div>

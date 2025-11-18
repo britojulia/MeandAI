@@ -27,10 +27,10 @@ public class User {
     private String nome;
     private String email;
 
-    @NotBlank(message = "área atual não pode ser nulo")
+    @NotBlank(message = "{user.areaAtual.notblank}")
     private String areaAtual; // Ex: "Marketing"
 
-    @NotBlank(message = "objetivo não pode ser nulo")
+    @NotBlank(message = "{user.objetivo.notblank}")
     private String objetivo;  // Ex: "Migrar para Tecnologia"
 
     @Enumerated(EnumType.STRING)

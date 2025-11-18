@@ -18,7 +18,7 @@ public class Etapa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "nome não pode ser nulo")
+    @NotBlank(message = "{etapa.nome.notblank}")
     private String nome; // Ex: "Lógica de Programação"
     private String descricao;
     private boolean concluida;
