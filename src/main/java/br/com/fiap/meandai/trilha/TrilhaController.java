@@ -1,5 +1,6 @@
 package br.com.fiap.meandai.trilha;
 
+import br.com.fiap.meandai.config.MessageHelper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TrilhaController {
 
+    private final MessageHelper messageHelper;
     private final TrilhaService trilhaService;
 
     @GetMapping
@@ -37,7 +39,7 @@ public class TrilhaController {
             @RequestParam List<String> etapasForm, RedirectAttributes redirect
     ) {
         var criada = trilhaService.createTrilha(trilha, etapasForm, userId);
-        redirect.addFlashAttribute("message", "Novo evento cadastrado com sucesso!");
+        redirect.addFlashAttribute("message", messageHelper.get("message.success"));
         return "redirect:/trilha/" + criada.getId();
     }
 
@@ -50,7 +52,7 @@ public class TrilhaController {
     @DeleteMapping("{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirect ){
         trilhaService.deleteById(id);
-        redirect.addFlashAttribute("message", "Trilha deletada com sucesso!");
+        redirect.addFlashAttribute("message", messageHelper.get("message.delete.success"));
         return "redirect:/trilha";
     }
 

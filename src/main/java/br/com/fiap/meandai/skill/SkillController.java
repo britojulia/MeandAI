@@ -1,5 +1,6 @@
 package br.com.fiap.meandai.skill;
 
+import br.com.fiap.meandai.config.MessageHelper;
 import br.com.fiap.meandai.trilha.TrilhaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 public class SkillController {
 
+    private final MessageHelper messageHelper;
     private final SkillService skillService;
 
     @GetMapping
@@ -46,13 +48,14 @@ public class SkillController {
             return "redirect:/skill/formSkill/" + userId;
         }
         // Já tem 3 skills, vai para a próxima etapa da trilha
+        redirect.addFlashAttribute("message", messageHelper.get("message.success"));
         return "redirect:/trilha/form/" + userId;
     }
 
     @DeleteMapping("{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirect ){
         skillService.deleteById(id);
-        redirect.addFlashAttribute("message", "skill deletada com sucesso!");
+        redirect.addFlashAttribute("message", messageHelper.get("message.delete.success"));
         return "redirect:/trilha/formSkill/";
     }
 

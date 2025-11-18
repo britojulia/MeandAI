@@ -1,5 +1,6 @@
 package br.com.fiap.meandai.etapa;
 
+import br.com.fiap.meandai.config.MessageHelper;
 import br.com.fiap.meandai.trilha.TrilhaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class EtapaController {
 
     private final EtapaService etapaService;
+    private final MessageHelper messageHelper;
 
     @GetMapping
     public String index(Model model) {
@@ -27,7 +29,7 @@ public class EtapaController {
     @DeleteMapping("{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirect ){
         etapaService.deleteById(id);
-        redirect.addFlashAttribute("message", "Evento deletado com sucesso!");
+        redirect.addFlashAttribute("message", messageHelper.get("message.delete.success"));
         return "redirect:/evento";
     }
 

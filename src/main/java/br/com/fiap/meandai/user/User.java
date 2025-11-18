@@ -24,8 +24,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
+    private String name;
+
+    @Column(unique = true)
     private String email;
+
+    private String avatarUrl;
 
     @NotBlank(message = "{user.areaAtual.notblank}")
     private String areaAtual; // Ex: "Marketing"
@@ -38,4 +42,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Trilha> trilhas;
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
 }
