@@ -19,6 +19,7 @@ public class EtapaController {
     private final EtapaService etapaService;
     private final MessageHelper messageHelper;
 
+
     @GetMapping
     public String index(Model model) {
         var etapas = etapaService.getAllEtapas();

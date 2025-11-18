@@ -23,16 +23,27 @@
   </div>
 
   <form th:action="@{'/skill?userId=' + ${userId}}" method="post" class="flex flex-col gap-4">
+
+    <!-- Nome da Skill -->
     <input type="text" name="nome"
            th:placeholder="#{skill.add.placeholder}"
            class="input input-bordered w-full"
            required />
 
+    <!-- Selecionar Nível -->
+    <select name="nivel" class="select select-bordered w-full" required>
+      <option value="" disabled selected>Selecione o nível</option>
+      <option value="INICIANTE">Iniciante</option>
+      <option value="INTERMEDIARIO">Intermediário</option>
+      <option value="AVANÇADO">Avançado</option>
+    </select>
+
     <button class="btn btn-success w-full" th:text="#{skill.add.button.save}"></button>
   </form>
 
-  <a th:href="@{'/trilha/form/' + ${userId}}" class="btn btn-outline w-full mt-4" th:text="#{skill.add.continue}">
-
+  <a th:href="@{'/trilha/form/' + ${userId}}"
+     class="btn btn-outline w-full mt-4"
+     th:text="#{skill.add.continue}">
   </a>
 
 </div>

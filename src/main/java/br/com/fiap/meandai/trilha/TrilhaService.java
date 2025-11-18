@@ -2,6 +2,7 @@ package br.com.fiap.meandai.trilha;
 
 import br.com.fiap.meandai.etapa.Etapa;
 import br.com.fiap.meandai.etapa.EtapaRepository;
+import br.com.fiap.meandai.messaging.MessagePublisher;
 import br.com.fiap.meandai.user.User;
 import br.com.fiap.meandai.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,6 +20,7 @@ public class TrilhaService {
     private final TrilhaRepository trilhaRepository;
     private final UserRepository userRepository;
     private final EtapaRepository etapaRepository;
+    private final MessagePublisher publisher;
 
     @Cacheable(value = "trilhas")
     public List<Trilha> getAllTrilhas(){
@@ -47,6 +49,7 @@ public class TrilhaService {
 
             etapaRepository.save(etapa);
         }
+        publisher.sendTrilhaCreated(trilha);
         return trilha;
     }
 

@@ -1,5 +1,6 @@
 package br.com.fiap.meandai.skill;
 
+import br.com.fiap.meandai.messaging.MessagePublisher;
 import br.com.fiap.meandai.user.User;
 import br.com.fiap.meandai.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -14,6 +15,7 @@ public class SkillService {
 
     private final SkillRepository skillRepository;
     private final UserRepository userRepository;
+    private final MessagePublisher publisher;
 
     @Cacheable(value = "skills")
     public List<Skill> getAllSkills() {
@@ -23,6 +25,7 @@ public class SkillService {
     public Skill save(Skill skill, Long userId) {
         var user = userRepository.findById(userId).orElseThrow();
         skill.setUser(user);
+        publisher.sendTrilhaCreated(skill);
         return skillRepository.save(skill);
     }
 
