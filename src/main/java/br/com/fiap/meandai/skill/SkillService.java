@@ -4,6 +4,7 @@ import br.com.fiap.meandai.user.User;
 import br.com.fiap.meandai.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class SkillService {
     private final SkillRepository skillRepository;
     private final UserRepository userRepository;
 
-
+    @Cacheable(value = "skills")
     public List<Skill> getAllSkills() {
         return skillRepository.findAll();
     }

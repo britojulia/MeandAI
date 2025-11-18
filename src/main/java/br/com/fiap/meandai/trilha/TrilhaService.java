@@ -6,6 +6,7 @@ import br.com.fiap.meandai.user.User;
 import br.com.fiap.meandai.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,7 +20,7 @@ public class TrilhaService {
     private final UserRepository userRepository;
     private final EtapaRepository etapaRepository;
 
-
+    @Cacheable(value = "trilhas")
     public List<Trilha> getAllTrilhas(){
         return trilhaRepository.findAll();
     }

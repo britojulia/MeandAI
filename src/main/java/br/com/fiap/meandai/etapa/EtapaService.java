@@ -1,6 +1,7 @@
 package br.com.fiap.meandai.etapa;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +14,8 @@ public class EtapaService {
     public EtapaService(EtapaRepository etapaRepository) {
         this.etapaRepository = etapaRepository;
     }
-    
+
+    @Cacheable(value = "etapas")
     public List<Etapa> getAllEtapas() {
         return etapaRepository.findAll();
     }
