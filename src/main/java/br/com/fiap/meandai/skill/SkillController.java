@@ -49,7 +49,7 @@ public class SkillController {
         }
         // Já tem 3 skills, vai para a próxima etapa da trilha
         redirect.addFlashAttribute("message", messageHelper.get("message.success"));
-        return "redirect:/trilha/form/" + userId;
+        return "redirect:/trilha/gerar/" + userId;
     }
 
     @DeleteMapping("{id}")

@@ -7,6 +7,8 @@ import br.com.fiap.meandai.user.User;
 import br.com.fiap.meandai.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ public class TrilhaService {
     private final UserRepository userRepository;
     private final EtapaRepository etapaRepository;
     private final MessagePublisher publisher;
+    private final ChatClient chatClient;
 
     @Cacheable(value = "trilhas")
     public List<Trilha> getAllTrilhas(){
@@ -31,27 +34,62 @@ public class TrilhaService {
         return trilhaRepository.save(trilha);
     }
 
-    public Trilha createTrilha(Trilha trilha, List<String> etapasForm, Long userId){
-        var user = userRepository.findById(userId).orElseThrow();
-        trilha.setUser(user);
-        trilha.setDataCriacao(LocalDate.now());
+    public List<String> gerarEtapasComIA(User user) {
+        String prompt = """
+        Crie uma trilha de aprendizado PARA ESTE USUÁRIO:
+
+        Área atual: %s
+        Objetivo profissional: %s
+        Skills que ele já possui: %s
+
+        Gere uma lista de 5 a 8 etapas.
+        Responda APENAS com os nomes das etapas, uma por linha.
+        """.formatted(
+                user.getAreaAtual(),
+                user.getObjetivo(),
+                user.getTrilhas()
+        );
+
+        String resposta = chatClient
+                .prompt()
+                .user(prompt)
+                .call()
+                .content();
+
+        return resposta.lines()
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
+    }
+
+    public Trilha createTrilha(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+
+        Trilha trilha = Trilha.builder()
+                .titulo("Trilha Personalizada")
+                .descricao("Trilha criada automaticamente pela IA")
+                .dataCriacao(LocalDate.now())
+                .user(user)
+                .build();
 
         trilha = trilhaRepository.save(trilha);
+        List<String> etapasGeradas = gerarEtapasComIA(user);
 
-        //dados mocados
-        for (String nome : etapasForm) {
+        for (String nome : etapasGeradas) {
             Etapa etapa = Etapa.builder()
                     .nome(nome)
-                    .descricao("Etapa da trilha")
+                    .descricao("Etapa sugerida pela IA")
                     .concluida(false)
                     .trilha(trilha)
                     .build();
-
             etapaRepository.save(etapa);
         }
+
         publisher.sendTrilhaCreated(trilha);
         return trilha;
     }
+
 
     public void deleteById(Long id){
         trilhaRepository.delete(getTrilhaById(id));
