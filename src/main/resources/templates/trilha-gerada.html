@@ -17,7 +17,7 @@
 </head>
 <body class="flex flex-col min-h-screen">
 
-<div th:replace="fragments/layout :: header"></div>
+<div th:replace="~{fragments/layout :: header}"></div>
 
 <div class="container mx-auto px-4 py-10 flex flex-col gap-10">
 
@@ -80,7 +80,7 @@
 
 </div>
 
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 <script>
     // Scroll automático para a última mensagem

@@ -10,7 +10,7 @@
 </head>
 <body class="flex flex-col min-h-screen">
 
-<div th:replace="fragments/layout :: header"></div>
+<div th:replace="~{fragments/layout :: header}"></div>
 
 <div class="max-w-xl mx-auto p-6">
 
@@ -49,6 +49,6 @@
 
 </div>
 
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>
