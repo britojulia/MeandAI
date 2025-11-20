@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="cmyk">
+<html lang="en" data-theme="lofi">
 <head>
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -16,9 +16,11 @@
 
   <!-- Mensagem de sucesso -->
   <div th:if="${message}"
-       class="alert alert-success shadow-lg mx-4 my-6 rounded-xl border border-success/30 bg-success/10 text-success">
-    <span th:text="${message}"></span>
+       class="alert alert-success shadow-lg mx-4 my-6 rounded-xl
+            border border-success bg-success text-success-content font-semibold">
+    <span class="text-green-800 font-medium"  th:text="${message}"></span>
   </div>
+
 
 
   <h1 class="text-2xl font-bold mb-4" th:text="#{skill.add.title}"></h1>
@@ -36,9 +38,9 @@
 
     <select name="nivel" class="select select-bordered w-full" required>
       <option value="" disabled selected th:text="#{skill.list.level}"></option>
-      <option value="INICIANTE">Iniciante</option>
-      <option value="INTERMEDIARIO">Intermediário</option>
-      <option value="AVANÇADO">Avançado</option>
+      <option value="INICIANTE" th:text="#{nivel.iniciante}"></option>
+      <option value="INTERMEDIARIO" th:text="#{nivel.intermediario}"></option>
+      <option value="AVANCADO" th:text="#{nivel.avancado}"></option>
     </select>
 
     <button class="btn btn-success w-full"
@@ -54,13 +56,28 @@
     <div th:if="${skills.size() == 0}" class="text-gray-500" th:text="#{skill.list.empty}"></div>
 
     <ul class="space-y-3" th:if="${skills.size() > 0}">
-      <li th:each="skill : ${skills}" class="p-4 border border-base-300 rounded-xl bg-base-100 shadow-sm">
-        <div class="font-semibold text-lg" th:text="${skill.nome}"></div>
-        <div class="text-sm text-gray-600">
-          Nível: <span th:text="${skill.nivel}"></span>
+      <li th:each="skill : ${skills}" class="p-4 border border-base-300 rounded-xl bg-base-100 shadow-sm flex justify-between items-center">
+
+        <div>
+          <div class="font-semibold text-lg" th:text="${skill.nome}"></div>
+          <div class="text-sm text-gray-600">
+            <span th:text="#{skill.level} + ': '"></span>
+            <span th:text="${skill.nivel}"></span>
+          </div>
         </div>
+
+        <ul>
+          <li>
+            <form method="post" th:action="${'/skill/' + skill.id}">
+              <input type="hidden" name="_method" value="DELETE" />
+              <button class="btn btn-outline mb-4 hover:bg-red-600" th:text="#{delete}"></button>
+            </form>
+          </li>
+        </ul>
+
       </li>
     </ul>
+
   </div>
 
 

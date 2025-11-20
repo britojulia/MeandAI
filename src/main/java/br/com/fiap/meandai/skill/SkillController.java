@@ -54,9 +54,11 @@ public class SkillController {
 
     @DeleteMapping("{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirect ){
+        Skill skill = skillService.getSkillById(id);
+        Long userId = skill.getUser().getId();
         skillService.deleteById(id);
-        redirect.addFlashAttribute("message", messageHelper.get("message.delete.success"));
-        return "redirect:/trilha/formSkill/";
+        redirect.addFlashAttribute("message", messageHelper.get("message.success"));
+        return "redirect:/skill/formSkill/" + userId;
     }
 
 

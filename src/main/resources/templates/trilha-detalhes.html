@@ -43,6 +43,7 @@
                 type="checkbox"
                 class="checkbox checkbox-success mt-1"
                 x-model="concluida"
+                :change="atualizarEtapa([[${etapa.id}]])"
         >
 
         <!-- Conteúdo do card -->
@@ -79,6 +80,26 @@
 </div>
 
 <div th:replace="~{fragments/footer :: footer}"></div>
+
+<script>
+  function trilhaProgress() {
+    return {
+
+      atualizarEtapa(id) {
+        fetch(`/etapa/${id}/toggle`, {
+          method: "POST"
+        })
+                .then(r => {
+                  if (!r.ok) throw new Error("Erro ao atualizar");
+                })
+                .catch(err => console.error(err));
+      }
+
+    }
+  }
+</script>
+
+
 </body>
 
 </html>

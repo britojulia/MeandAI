@@ -69,67 +69,13 @@ public class TrilhaController {
         return "trilha-detalhes";
     }
 
-//    @GetMapping
-//    public String listarTrilhas(Model model) {
-//        List<Trilha> trilhas = trilhaService.getAllTrilhas();
-//        model.addAttribute("trilhas", trilhas);
-//        return "trilhas-lista";
-//    }
-//
-//    @GetMapping("/{id}")
-//    public String detalhesTrilha(@PathVariable Long id, Model model) {
-//        Trilha trilha = trilhaService.getTrilhaById(id);
-//        model.addAttribute("trilha", trilha);
-//        return "trilha-detalhes"; //
-//    }
-//    @GetMapping("/criar/{userId}")
-//    public String criarAutomaticamente(@PathVariable Long userId,
-//                                       RedirectAttributes redirect) {
-//
-//        var trilha = trilhaService.createTrilha(userId);
-//
-//        redirect.addFlashAttribute("message",
-//                messageHelper.get("message.success"));
-//
-//        return "redirect:/trilha/" + trilha.getId();
-//    }
-//
-//    @GetMapping("/gerar/{userId}")
-//    public String gerarTrilhaDinamica(@PathVariable Long userId, Model model) {
-//
-//        // Busca o usuário
-//        User user = trilhaService.getUserById(userId);
-//
-//        // Gera etapas dinamicamente usando IA (sem salvar no banco)
-//        List<String> etapasGeradas = trilhaService.gerarEtapasComIA(user);
-//
-//        // Cria um objeto Trilha temporário para mostrar no template
-//        Trilha trilha = Trilha.builder()
-//                .titulo("Trilha Personalizada (Gerada Dinamicamente)")
-//                .descricao("Esta trilha foi criada dinamicamente pela IA sem salvar no banco")
-//                .dataCriacao(LocalDate.now())
-//                .user(user)
-//                .etapas(
-//                        etapasGeradas.stream().map(nome -> Etapa.builder()
-//                                .nome(nome)
-//                                .descricao("Etapa sugerida pela IA")
-//                                .concluida(false)
-//                                .build()
-//                        ).toList()
-//                )
-//                .build();
-//
-//        model.addAttribute("trilha", trilha);
-//
-//        return "trilha-gerada"; // template novo
-//    }
 
 
     @DeleteMapping("{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirect ){
         trilhaService.deleteById(id);
-        redirect.addFlashAttribute("message", messageHelper.get("message.delete.success"));
-        return "redirect:/trilha";
+        redirect.addFlashAttribute("message", messageHelper.get("message.success"));
+        return "redirect:/trilha/lista";
     }
 
 
