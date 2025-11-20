@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="cmyk">
+<html lang="en" data-theme="lofi">
 <head>
   <meta charset="UTF-8">
   <title>Me and IA</title>
@@ -11,26 +11,46 @@
 
 <div th:replace="~{fragments/layout :: header}"></div>
 
-<div class="container mx-auto px-6 py-12 max-w-4xl flex flex-col gap-6">
+<div class="container mx-auto px-6 py-12 max-w-5xl flex flex-col gap-10">
 
-  <h1 class="text-4xl font-bold mb-6">Minhas Trilhas</h1>
+  <!-- Título -->
+  <div class="flex justify-between items-center">
+    <h1 class="text-4xl font-extrabold tracking-tight" th:text="#{home.trilhas.title}"></h1>
+  </div>
 
-  <div th:if="${trilhas.size() == 0}" class="text-gray-500">
+  <!-- Nenhuma trilha -->
+  <div th:if="${trilhas.size() == 0}"
+       class="text-gray-500 text-center text-lg py-10 opacity-75">
     Você ainda não possui trilhas criadas.
   </div>
 
-  <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <!-- Lista de trilhas -->
+  <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
     <li th:each="trilha : ${trilhas}">
-      <a th:href="@{'/trilha/' + ${trilha.id}}">
-        <div class="card bg-base-200 shadow p-4 hover:bg-base-300 transition">
-          <h2 class="font-bold text-lg" th:text="${trilha.titulo}"></h2>
-          <p class="text-sm text-gray-600" th:text="${trilha.descricao}"></p>
+      <div class="card bg-base-100 shadow-lg border border-base-300 rounded-xl hover:shadow-xl transition-all duration-300 p-6 flex flex-col justify-between">
+
+        <div>
+          <h2 class="text-xl font-semibold mb-2 line-clamp-1"
+              th:text="${trilha.titulo}"></h2>
+
+          <p class="text-sm text-gray-600 mb-4 line-clamp-3"
+             th:text="${trilha.descricao}"></p>
         </div>
-      </a>
+
+        <div class="flex justify-end">
+          <a th:href="@{'/trilha/' + ${trilha.id}}"
+             class="btn btn-primary hover:border-blue-500 hover:bg-transparent hover:text-blue-500 transition" th:text="#{trilha.details}">
+          </a>
+        </div>
+
+      </div>
     </li>
+
   </ul>
 
 </div>
+
 
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
