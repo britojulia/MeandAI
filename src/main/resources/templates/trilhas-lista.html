@@ -19,10 +19,14 @@
     Você ainda não possui trilhas criadas.
   </div>
 
-  <ul>
+  <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <li th:each="trilha : ${trilhas}">
-      <a th:href="@{'/trilhas/' + ${trilha.id}}" th:text="${trilha.titulo}"></a>
-      <p th:text="${trilha.descricao}"></p>
+      <a th:href="@{'/trilha/' + ${trilha.id}}">
+        <div class="card bg-base-200 shadow p-4 hover:bg-base-300 transition">
+          <h2 class="font-bold text-lg" th:text="${trilha.titulo}"></h2>
+          <p class="text-sm text-gray-600" th:text="${trilha.descricao}"></p>
+        </div>
+      </a>
     </li>
   </ul>
 

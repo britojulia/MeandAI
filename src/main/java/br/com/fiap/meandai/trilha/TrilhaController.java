@@ -18,6 +18,7 @@ public class TrilhaController {
 
     private final MessageHelper messageHelper;
     private final TrilhaService trilhaService;
+    private final TrilhaRepository trilhaRepository;
     private final UserService userService;
 
     @GetMapping
@@ -25,6 +26,14 @@ public class TrilhaController {
         var trilhas = trilhaService.getAllTrilhas();
         model.addAttribute("trilhas", trilhas);
         return "index";
+    }
+
+    //todas as trilhas
+    @GetMapping("/lista")
+    public String listarTrilhas(Model model) {
+        List<Trilha> trilhas = trilhaRepository.findAll();
+        model.addAttribute("trilhas", trilhas);
+        return "trilhas-lista";
     }
 
     //gera a trilha sem salvar
