@@ -32,11 +32,32 @@
             <h2 class="card-title text-2xl" th:text="#{home.maincard.title}"></h2>
             <p th:text="#{home.maincard.description}"></p>
             <div class="card-actions justify-end">
-                <a href="user/form" class="btn btn-secondary btn-md" th:text="#{home.maincard.button}">
+                <a href="user/form" class="btn btn-secondary btn-md hover:border-pink-600 hover:bg-transparent hover:text-pink-600transition" th:text="#{home.maincard.button}">
                 </a>
             </div>
         </div>
     </div>
+
+    <!-- IA -->
+    <div class="relative rounded-2xl p-6 shadow-lg mb-10 ">
+        <span class="absolute top-4 right-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">
+        GEMINI
+    </span>
+
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div>
+                <h2 class="text-2xl font-bold flex items-center gap-2">
+                    ✨ <span th:text="#{home.chat.title}"></span>
+                </h2>
+                <p class="text-base-content/70 mt-1" th:text="#{home.chat.description}"></p>
+            </div>
+            <a href="/chat"
+               class="btn btn-secondary btn-md hover:border-pink-300 hover:bg-transparent hover:text-pink-300 transition">
+                <span th:text="#{home.chat.button}"></span>
+            </a>
+        </div>
+    </div>
+
 
     <!-- GRID PRINCIPAL -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -60,7 +81,8 @@
                 <p class="italic text-base-content/80" th:text="${recomendacaoIA}">
                 </p>
                 <div class="card-actions justify-end">
-                    <a href="/ai/sugestoes" class="btn btn-primary btn-sm" th:text="#{home.ia.button}"></a>
+                    <a href="/ai/sugestoes" class="btn btn-primary btn-sm hover:border-blue-500 hover:bg-transparent hover:text-blue-500
+    transition-colors duration-300" th:text="#{home.ia.button}"></a>
                 </div>
             </div>
         </div>
@@ -68,10 +90,10 @@
         <!-- PROGRESSO -->
         <div class="card bg-base-100 shadow-md hover:shadow-lg transition">
             <div class="card-body">
-                <h2 class="card-title">Seu Progresso</h2>
-                <p>Você concluiu:</p>
+                <h2 class="card-title" th:text="#{home.progress.title}"></h2>
+                <p th:text="#{home.progress.description}"></p>
                 <progress class="progress progress-primary w-full" value="40" max="100"></progress>
-                <p class="text-sm text-base-content/70 mt-1">40% concluído</p>
+                <p class="text-sm text-base-content/70 mt-1"></p>
             </div>
         </div>
 
@@ -79,8 +101,8 @@
 
 
     <!-- FRASE FINAL -->
-    <p class="mt-14 text-center text-base-content/60 text-sm" th:text="#{home.footer.phrase}">
-    </p>
+    <h4 class="mt-14 text-center text-base-content/60 text-sm" th:text="#{home.footer.phrase}">
+    </h4>
 
 </div>
 

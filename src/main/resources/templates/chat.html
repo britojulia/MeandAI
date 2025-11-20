@@ -2,28 +2,33 @@
 <html lang="en" data-theme="cmyk">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Me and AI</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
-<div class="max-w-3xl mx-auto py-10 flex flex-col gap-6">
-    <h1 class="text-3xl font-bold mb-4">Converse com a IA</h1>
+<body class="flex flex-col min-h-screen">
 
-    <div class="chat-box">
+<div th:replace="~{fragments/layout :: header}"></div>
+
+<div class="max-w-3xl mx-auto w-full flex flex-col flex-1 gap-6 px-4 py-6">
+
+    <h1 class="text-3xl font-bold mb-2" th:text="#{chat.title}"></h1>
+
+    <div class="flex-1 overflow-y-auto chat-box space-y-4">
+
         <div th:each="msg : ${historico}">
 
-            <div th:if="${msg.sender == 'user'}"
-                 class="chat chat-end">
+            <!-- usuario -->
+            <div th:if="${msg.sender == 'user'}" class="chat chat-end">
                 <div class="chat-bubble chat-bubble-primary">
                     <span th:text="${msg.content}"></span>
                 </div>
             </div>
 
-            <div th:if="${msg.sender == 'ia'}"
-                 class="chat chat-start">
-                <div class="chat-bubble bg-base-200 border text-base-content">
+            <!-- IA -->
+            <div th:if="${msg.sender == 'ia'}" class="chat chat-start">
+                <div class="chat-bubble bg-base-200 border border-pink-400 text-base-content">
                     <span th:text="${msg.content}"></span>
                 </div>
             </div>
@@ -32,12 +37,17 @@
     </div>
 
 
-    <form action="/chat" method="post" class="flex gap-2 mt-4">
-        <input type="hidden" name="userId" value="1" />
-        <input type="text" name="mensagem" placeholder="Digite sua mensagem..."
-               class="input input-bordered flex-1" required />
-        <button type="submit" class="btn btn-primary">Enviar</button>
+    <form action="/chat" method="post" class="flex gap-2 mt-4 sticky bottom-0 bg-base-100 py-2">
+        <input type="hidden" name="userId" th:value="${user?.id ?: 0}" />
+
+        <label>
+            <input type="text" name="mensagem" th:placeholder="#{chat.placeholder}"
+                   class="input input-bordered flex-1" required />
+        </label>
+
+        <button type="submit" class="btn btn-primary" th:text="#{chat.send}"></button>
     </form>
+
 </div>
 
 </body>

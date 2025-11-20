@@ -48,6 +48,7 @@ public class ChatController {
                                  HttpSession session) {
 
         User user = userService.getUserById(userId);
+        model.addAttribute("user", user);
 
         // Recupera histórico sem warnings
         Object historicoObj = session.getAttribute("historico");
