@@ -48,7 +48,6 @@ public class ChatController {
                                  HttpSession session) {
 
         User user = userService.getUserById(userId);
-        model.addAttribute("user", user);
 
         // Recupera histórico sem warnings
         Object historicoObj = session.getAttribute("historico");
@@ -75,7 +74,8 @@ public class ChatController {
 
         String prompt = """
         Você é uma IA especialista em carreira.
-        Responda curto e amigável.
+        Responda com até 8 linhas e de forma amigável.
+        Só use caracteres simples e números.
         Histórico:
         %s
         Responda a última mensagem.

@@ -28,7 +28,7 @@
 
             <!-- IA -->
             <div th:if="${msg.sender == 'ia'}" class="chat chat-start">
-                <div class="chat-bubble bg-base-200 border border-pink-400 text-base-content">
+                <div class="chat-bubble bg-base-200 border text-base-content">
                     <span th:text="${msg.content}"></span>
                 </div>
             </div>
@@ -37,14 +37,10 @@
     </div>
 
 
-    <form action="/chat" method="post" class="flex gap-2 mt-4 sticky bottom-0 bg-base-100 py-2">
-        <input type="hidden" name="userId" th:value="${user?.id ?: 0}" />
-
-        <label>
-            <input type="text" name="mensagem" th:placeholder="#{chat.placeholder}"
-                   class="input input-bordered flex-1" required />
-        </label>
-
+    <form action="/chat" method="post" class="flex gap-2 mt-4">
+        <input type="hidden" name="userId" value="1" />
+        <input type="text" name="mensagem" th:placeholder="#{chat.placeholder}"
+               class="input input-bordered flex-1" required />
         <button type="submit" class="btn btn-primary" th:text="#{chat.send}"></button>
     </form>
 
