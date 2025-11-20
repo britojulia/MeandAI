@@ -1,17 +1,14 @@
 package br.com.fiap.meandai.trilha;
 
 import br.com.fiap.meandai.config.MessageHelper;
-import br.com.fiap.meandai.etapa.Etapa;
 import br.com.fiap.meandai.user.User;
 import br.com.fiap.meandai.user.UserService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -30,31 +27,52 @@ public class TrilhaController {
         return "index";
     }
 
-    @GetMapping("/lista")
-    public String listarTrilhas(Model model) {
-        List<Trilha> trilhas = trilhaService.getAllTrilhas();
-        model.addAttribute("trilhas", trilhas);
-        return "trilhas-lista";
-    }
-
-    @PostMapping("/{userId}")
-    public TrilhaService.ResultadoIA criarTrilha(@PathVariable Long userId) {
-        return trilhaService.createTrilha(userId);
-    }
-
+    //gera a trilha sem salvar
     @GetMapping("/gerar/{userId}")
     public String gerarTrilhaDinamica(@PathVariable Long userId, Model model) {
-
         User user = userService.getUserById(userId);
-
         var resultado = trilhaService.gerarEtapasComIA(user);
+
         model.addAttribute("respostaIA", resultado.conteudo());
         model.addAttribute("user", user);
 
-        return "trilha-gerada";
+        return "trilha-gerada"; // mostra só o texto gerado pela IA
     }
 
+    //salva a trilha com as etapas separadas
+    @PostMapping("/{userId}")
+    public String criarTrilha(@PathVariable Long userId, Model model, RedirectAttributes redirect) {
+        Trilha trilha = trilhaService.createTrilha(userId); // retorna Trilha completa
 
+        // adiciona a trilha no model para exibir na página
+        model.addAttribute("trilha", trilha);
+
+        redirect.addFlashAttribute("message", messageHelper.get("message.success"));
+
+        // redireciona para a página de detalhes da trilha
+        return "redirect:/trilha/" + trilha.getId();
+    }
+
+    @GetMapping("/{id}")
+    public String detalhesTrilha(@PathVariable Long id, Model model) {
+        Trilha trilha = trilhaService.getTrilhaById(id);
+        model.addAttribute("trilha", trilha);
+        return "trilha-detalhes";
+    }
+
+//    @GetMapping
+//    public String listarTrilhas(Model model) {
+//        List<Trilha> trilhas = trilhaService.getAllTrilhas();
+//        model.addAttribute("trilhas", trilhas);
+//        return "trilhas-lista";
+//    }
+//
+//    @GetMapping("/{id}")
+//    public String detalhesTrilha(@PathVariable Long id, Model model) {
+//        Trilha trilha = trilhaService.getTrilhaById(id);
+//        model.addAttribute("trilha", trilha);
+//        return "trilha-detalhes"; //
+//    }
 //    @GetMapping("/criar/{userId}")
 //    public String criarAutomaticamente(@PathVariable Long userId,
 //                                       RedirectAttributes redirect) {
@@ -97,16 +115,6 @@ public class TrilhaController {
 //        return "trilha-gerada"; // template novo
 //    }
 
-    @GetMapping("/{id}")
-    public String detalhes(@PathVariable Long id, Model model) {
-
-        var trilha = trilhaService.getTrilhaById(id);
-
-        model.addAttribute("trilha", trilhaService.getTrilhaById(id));
-        model.addAttribute("etapas", trilha.getEtapas());
-
-        return "trilha";
-    }
 
     @DeleteMapping("{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirect ){

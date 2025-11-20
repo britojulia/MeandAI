@@ -1,6 +1,7 @@
 package br.com.fiap.meandai.etapa;
 
 import br.com.fiap.meandai.trilha.Trilha;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -20,9 +21,14 @@ public class Etapa {
 
     @NotBlank(message = "{etapa.nome.notblank}")
     private String nome; // Ex: "Lógica de Programação"
+
+    @Column(columnDefinition = "TEXT")
     private String descricao;
+
     private boolean concluida;
 
     @ManyToOne
+    @JoinColumn(name = "trilha_id")
+    @JsonBackReference
     private Trilha trilha;
 }

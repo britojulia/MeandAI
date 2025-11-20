@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="lofi">
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+
+  <meta charset="UTF-8">
+  <title>Me and AI</title>
+</head>
+<body class="flex flex-col min-h-screen">
+
+<div th:replace="~{fragments/layout :: header}"></div>
+
+<div class="container mx-auto px-6 py-12 max-w-4xl flex flex-col gap-6">
+
+  <h1 class="text-3xl font-bold" th:text="${trilha.titulo}">Título da trilha</h1>
+  <p class="text-gray-600 mt-1" th:text="${trilha.descricao}">Descrição da trilha</p>
+
+  <h2 class="text-2xl font-semibold mt-6 mb-2">Etapas</h2>
+  <ul class="space-y-3">
+    <li th:each="etapa : ${trilha.etapas}" class="p-3 border rounded-md bg-base-100 shadow-sm">
+      <div class="font-medium text-lg" th:text="${etapa.nome}">Nome da etapa</div>
+      <div class="text-gray-600 mt-1" th:text="${etapa.descricao}">Descrição da etapa</div>
+    </li>
+  </ul>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+
+</html>

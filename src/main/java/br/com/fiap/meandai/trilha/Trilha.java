@@ -2,6 +2,8 @@ package br.com.fiap.meandai.trilha;
 
 import br.com.fiap.meandai.etapa.Etapa;
 import br.com.fiap.meandai.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -28,11 +30,12 @@ public class Trilha {
     private String conteudoGeradoIA; // texto inteiro da resposta da IA
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @OneToMany(mappedBy = "trilha", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Etapa> etapas;
 
-    @Transient
-    private List<String> etapasForm; // recebe os nomes do formulário
 }

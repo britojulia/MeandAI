@@ -2,6 +2,7 @@ package br.com.fiap.meandai.user;
 
 import br.com.fiap.meandai.enuns.TypesEnum;
 import br.com.fiap.meandai.trilha.Trilha;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.context.annotation.Role;
@@ -37,10 +38,9 @@ public class User {
     @NotBlank(message = "{user.objetivo.notblank}")
     private String objetivo;  // Ex: "Migrar para Tecnologia"
 
-    @Enumerated(EnumType.STRING)
-    private TypesEnum.UserRole role; // USER ou ADMIN
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Trilha> trilhas;
 
     public User(String name, String email) {

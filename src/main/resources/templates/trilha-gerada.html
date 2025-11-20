@@ -44,6 +44,10 @@
         Voltar
     </a>
 
+    <form th:action="@{'/trilha/' + ${user.id}}" method="post">
+        <button type="submit">Salvar Trilha</button>
+    </form>
+
 
 </div>
 

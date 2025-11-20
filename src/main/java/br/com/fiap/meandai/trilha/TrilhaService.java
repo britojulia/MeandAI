@@ -16,6 +16,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,10 +66,6 @@ public class TrilhaService {
 
         return new ResultadoIA(respostaIA);
     }
-
-
-
-
 
 
 
@@ -128,26 +125,57 @@ public class TrilhaService {
 //        return trilha;
 //    }
 
-    public ResultadoIA createTrilha(Long userId) {
+    public Trilha createTrilha(Long userId) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
 
         // chama a IA
         ResultadoIA resultado = gerarEtapasComIA(user);
+        String conteudo = resultado.conteudo();
 
-        // cria a trilha normal
+        // Pega o título da trilha (linha antes da primeira quebra de linha)
+        String titulo = conteudo.lines().findFirst().orElse("Trilha Personalizada");
+
+        // cria a trilha
         Trilha trilha = Trilha.builder()
-                .titulo("Trilha Personalizada")
+                .titulo(titulo)
                 .descricao("Trilha criada automaticamente pela IA")
                 .dataCriacao(LocalDate.now())
+                .conteudoGeradoIA(resultado.conteudo())
                 .user(user)
                 .build();
 
         trilha = trilhaRepository.save(trilha);
 
+        // Divide o conteúdo em etapas
+        List<Etapa> etapas = new ArrayList<>();
+        String[] partes = conteudo.split("Etapa \\d+:"); // separa cada etapa
+        for (String parte : partes) {
+            parte = parte.trim();
+            if (parte.isEmpty()) continue;
+
+            // Pega o objetivo da etapa (primeira linha) e usa como descrição
+            String[] linhas = parte.split("\n", 2);
+            String objetivo = linhas[0].trim(); // primeira linha
+            String descricao = linhas.length > 1 ? linhas[1].trim() : "";
+
+            // Salva nome curto (Etapa 1, Etapa 2...) e descrição resumida
+            Etapa etapa = Etapa.builder()
+                    .nome(objetivo.length() > 50 ? objetivo.substring(0, 50) : objetivo) // limita o nome
+                    .descricao(descricao.length() > 255 ? descricao.substring(0, 255) : descricao)
+                    .concluida(false)
+                    .trilha(trilha)
+                    .build();
+
+            etapas.add(etapa);
+        }
+
+        trilha.setEtapas(etapas);
+        trilhaRepository.save(trilha); // CascadeType.ALL salva as etapas também
+
         publisher.sendTrilhaCreated(trilha);
-        return resultado;
+        return trilha;
     }
 
 
