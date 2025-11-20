@@ -1,6 +1,7 @@
 package br.com.fiap.meandai.trilha;
 
 import br.com.fiap.meandai.config.MessageHelper;
+import br.com.fiap.meandai.etapa.EtapaService;
 import br.com.fiap.meandai.user.User;
 import br.com.fiap.meandai.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/trilha")
@@ -20,13 +22,22 @@ public class TrilhaController {
     private final TrilhaService trilhaService;
     private final TrilhaRepository trilhaRepository;
     private final UserService userService;
+    private final EtapaService etapaService;
 
     @GetMapping
     public String index(Model model) {
         var trilhas = trilhaService.getAllTrilhas();
+
+        Map<Long, Long> etapasConcluidas = etapaService.contarEtapasConcluidasPorTrilha();
+        Map<Long, Long> etapasTotais = etapaService.contarEtapasTotaisPorTrilha();
+
         model.addAttribute("trilhas", trilhas);
+        model.addAttribute("etapasConcluidas", etapasConcluidas);
+        model.addAttribute("etapasTotais", etapasTotais);
+
         return "index";
     }
+
 
     //todas as trilhas
     @GetMapping("/lista")

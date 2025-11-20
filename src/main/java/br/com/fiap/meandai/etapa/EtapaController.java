@@ -26,15 +26,17 @@ public class EtapaController {
         return "index";
     }
 
-    @PostMapping("/etapa/{id}/toggle")
-    public ResponseEntity<?> toggleEtapa(@PathVariable Long id) {
-        Etapa etapa = etapaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Etapa não encontrada"));
+    @PutMapping("/concluir/{id}")
+    public String concluirEtapa(@PathVariable Long id) {
+        Etapa etapa = etapaService.concluir(id);
+        return "redirect:/trilha/" + etapa.getTrilha().getId();
+    }
 
-        etapa.setConcluida(!etapa.isConcluida());
-        etapaRepository.save(etapa);
-
-        return ResponseEntity.ok(etapa.isConcluida());
+    @PutMapping("/desfazer/{id}")
+    public String desfazer(@PathVariable Long id, RedirectAttributes redirect) {
+        Etapa etapa = etapaService.naoConcluida(id);
+        redirect.addFlashAttribute("message", "Etapa reaberta!");
+        return "redirect:/trilha/" + etapa.getTrilha().getId();
     }
 
 

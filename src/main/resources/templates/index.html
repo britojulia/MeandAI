@@ -17,7 +17,6 @@
 
 <div class="p-6 max-w-6xl mx-auto">
 
-    <!-- conteúdo principal -->
     <div class="mb-8">
         <h1 class="text-3xl  font-extrabold tracking-tight" th:text="#{home.header.hello}">
              <span >Usuário 👋</span>
@@ -38,7 +37,7 @@
         </div>
     </div>
 
-    <!-- IA -->
+    <!-- card IA -->
     <div class="relative rounded-2xl p-6 shadow-lg mb-10 ">
         <span class="absolute top-4 right-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">
         GEMINI
@@ -59,32 +58,49 @@
     </div>
 
 
-    <!-- GRID PRINCIPAL -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-        <!-- MINHAS TRILHAS -->
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+
+        <!-- progresso -->
         <div class="card bg-base-100 shadow-md hover:shadow-lg transition">
-            <div class="card-body">
-                <h2 class="card-title" th:text="#{home.trilhas.button}"></h2>
-                <p th:text="#{home.trilhas.description}"></p>
+            <div class="card-body space-y-4">
+                <!-- Título principal -->
+                <h2 class="card-title text-2xl font-bold text-primary" th:text="#{home.progress.title}"></h2>
+
+                <!-- Descrição -->
+                <p class="text-base text-base-content/70" th:text="#{home.progress.description}"></p>
+
+                <!-- Lista de trilhas -->
+                <ul class="space-y-6">
+                    <li th:each="trilha : ${trilhas}" class="space-y-2">
+                        <!-- Título da trilha -->
+                        <h3 class="text-lg font-semibold text-neutral" th:text="${trilha.titulo}"></h3>
+
+                        <!-- Contagem de etapas -->
+                        <p class="text-sm text-gray-500">
+                            <span th:text="${etapasConcluidas[trilha.id] ?: 0}"></span> /
+                            <span th:text="${etapasTotais[trilha.id] ?: 0}"></span> etapas concluídas
+                        </p>
+
+                        <!-- Barra de progresso -->
+                        <progress class="progress progress-primary w-full h-3 rounded-lg"
+                                  th:value="${etapasConcluidas[trilha.id] ?: 0}"
+                                  th:max="${etapasTotais[trilha.id] ?: 1}">
+                        </progress>
+                    </li>
+                </ul>
                 <div class="card-actions justify-end">
-                    <a href="/trilha/lista" class="btn btn-primary btn-sm hover:border-blue-500 hover:bg-transparent hover:text-blue-500
-    transition-colors duration-300" th:text="#{home.ia.button}"></a>
+                    <a href="/trilha/lista"
+                       class="btn btn-primary hover:border-blue-500 hover:bg-transparent hover:text-blue-500 transition-colors duration-300"
+                       th:text="#{home.ia.button}">
+                    </a>
                 </div>
             </div>
         </div>
 
-        <!-- PROGRESSO -->
-        <div class="card bg-base-100 shadow-md hover:shadow-lg transition">
-            <div class="card-body">
-                <h2 class="card-title" th:text="#{home.progress.title}"></h2>
-                <p th:text="#{home.progress.description}"></p>
-                <progress class="progress progress-primary w-full" value="40" max="100"></progress>
-                <p class="text-sm text-base-content/70 mt-1"></p>
-            </div>
-        </div>
 
     </div>
+
 
 
     <!-- FRASE FINAL -->

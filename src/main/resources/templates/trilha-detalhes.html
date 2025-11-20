@@ -4,7 +4,6 @@
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
   <meta charset="UTF-8">
   <title>Me and AI</title>
@@ -13,93 +12,67 @@
 
 <div th:replace="~{fragments/layout :: header}"></div>
 
+<div class="container mx-auto px-6 py-14 max-w-4xl flex flex-col gap-10">
 
-<div x-data="trilhaProgress()">
-
-  <div class="container mx-auto px-6 py-14 max-w-4xl flex flex-col gap-10">
-
-    <!-- titulo -->
-    <div class="bg-base-100 p-8 ">
-      <h1 class="text-3xl font-bold text-neutral mb-3" th:text="${trilha.titulo}"></h1>
-
-      <p class="text-gray-700 leading-relaxed text-[15px] padding-10" th:text="${trilha.descricao}">
-      </p>
-    </div>
-
-    <h2 class="text-2xl font-semibold"
-        th:text="#{etapas.title}">
-    </h2>
-
-    <!-- etapas-->
-    <ul class="space-y-6">
-
-      <li th:each="etapa : ${trilha.etapas}"
-          class="p-6 rounded-xl bg-base-100 shadow-md flex items-start gap-5 border border-base-300 transition-all"
-          x-data="{ concluida: false }"
-          x-init="concluida = [[${etapa.concluida}]]">
-
-        <!-- Checkbox -->
-        <input
-                type="checkbox"
-                class="checkbox checkbox-success mt-1"
-                x-model="concluida"
-                :change="atualizarEtapa([[${etapa.id}]])"
-        >
-
-        <!-- Conteúdo do card -->
-        <div class="flex-1 space-y-2"
-             :class="concluida ? 'opacity-60' : ''">
-
-          <div class="flex items-center justify-between">
-            <h3 class="font-semibold text-lg flex items-center gap-2 text-base-content">
-              <span th:text="${etapa.nome}"></span>
-              <span class="opacity-40">...</span>
-            </h3>
-
-            <!-- Badge -->
-            <div class="flex items-center">
-              <span x-show="concluida" class="badge badge-success text-xs px-3 py-1"
-                    th:text="#{etapa.status.completed}"></span>
-              <span x-show="!concluida" class="badge badge-warning badge-outline text-xs px-3 py-1"
-                                th:text="#{etapa.status.progress}"></span>
-            </div>
-
-          </div>
-
-          <p class="text-gray-600 text-sm leading-relaxed">
-            <span th:text="${etapa.descricao}"></span>
-            <span class="opacity-40">...</span>
-          </p>
-
-        </div>
-      </li>
-
-    </ul>
-
+  <!-- título da trilha -->
+  <div class="bg-base-100 p-8">
+    <h1 class="text-3xl font-bold text-neutral mb-3" th:text="${trilha.titulo}"></h1>
+    <p class="text-gray-700 leading-relaxed text-[15px] padding-10" th:text="${trilha.descricao}"></p>
   </div>
+
+  <h2 class="text-2xl font-semibold" th:text="#{etapas.title}"></h2>
+
+  <!-- lista de etapas -->
+  <ul class="space-y-6">
+    <li th:each="etapa : ${trilha.etapas}"
+        class="p-6 rounded-xl bg-base-100 shadow-md flex items-start gap-5 border border-base-300 transition-all">
+
+      <!-- Botões Concluir/Desfazer -->
+      <div class="flex flex-col items-center mt-1">
+        <form th:if="${!etapa.concluida}"
+              method="post"
+              th:action="@{'/etapa/concluir/' + ${etapa.id}}">
+          <input type="hidden" name="_method" value="PUT" />
+          <button class="btn btn-success btn-sm">Concluir</button>
+        </form>
+
+        <form th:if="${etapa.concluida}"
+              method="post"
+              th:action="@{'/etapa/desfazer/' + ${etapa.id}}">
+          <input type="hidden" name="_method" value="PUT" />
+          <button class="btn btn-warning btn-sm">Desfazer</button>
+        </form>
+      </div>
+
+      <!-- Conteúdo do card -->
+      <div class="flex-1 space-y-2" th:classappend="${etapa.concluida} ? 'opacity-60'">
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold text-lg flex items-center gap-2 text-base-content">
+            <span th:text="${etapa.nome}"></span>
+            <span class="opacity-40">...</span>
+          </h3>
+
+          <!-- Badge -->
+          <div class="flex items-center">
+            <span th:if="${etapa.concluida}" class="badge badge-success text-xs px-3 py-1"
+                  th:text="#{etapa.status.completed}"></span>
+            <span th:if="${!etapa.concluida}" class="badge badge-warning badge-outline text-xs px-3 py-1"
+                  th:text="#{etapa.status.progress}"></span>
+          </div>
+        </div>
+
+        <p class="text-gray-600 text-sm leading-relaxed">
+          <span th:text="${etapa.descricao}"></span>
+          <span class="opacity-40">...</span>
+        </p>
+      </div>
+
+    </li>
+  </ul>
+
 </div>
 
 <div th:replace="~{fragments/footer :: footer}"></div>
 
-<script>
-  function trilhaProgress() {
-    return {
-
-      atualizarEtapa(id) {
-        fetch(`/etapa/${id}/toggle`, {
-          method: "POST"
-        })
-                .then(r => {
-                  if (!r.ok) throw new Error("Erro ao atualizar");
-                })
-                .catch(err => console.error(err));
-      }
-
-    }
-  }
-</script>
-
-
 </body>
-
 </html>
