@@ -30,6 +30,13 @@ public class TrilhaController {
         return "index";
     }
 
+    @GetMapping("/lista")
+    public String listarTrilhas(Model model) {
+        List<Trilha> trilhas = trilhaService.getAllTrilhas();
+        model.addAttribute("trilhas", trilhas);
+        return "trilhas-lista";
+    }
+
     @PostMapping("/{userId}")
     public TrilhaService.ResultadoIA criarTrilha(@PathVariable Long userId) {
         return trilhaService.createTrilha(userId);

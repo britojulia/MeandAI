@@ -50,7 +50,8 @@ public class TrilhaService {
 
         String prompt = """
         Gere uma trilha personalizada de aprendizado com base nas habilidades do usuário abaixo e o objetivo de carreira dele.
-        Retorne apenas o texto final, sem formatação JSON e sem MARKDOWN.
+        Nessa trilha, você deve dar instruções claras sobre o passo a passo, e separar por etapas.
+        Retorne apenas o texto final, sem formatação JSON e sem caracteres * #.
 
         Usuário: %s
         Habilidades: %s
@@ -64,6 +65,9 @@ public class TrilhaService {
 
         return new ResultadoIA(respostaIA);
     }
+
+
+
 
 
 

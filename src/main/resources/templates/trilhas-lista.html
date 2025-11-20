@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cmyk">
+<head>
+  <meta charset="UTF-8">
+  <title>Me and IA</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+</head><body class="flex flex-col min-h-screen">
+
+<div th:replace="~{fragments/layout :: header}"></div>
+
+<div class="container mx-auto px-6 py-12 max-w-4xl flex flex-col gap-6">
+
+  <h1 class="text-4xl font-bold mb-6">Minhas Trilhas</h1>
+
+  <div th:if="${trilhas.size() == 0}" class="text-gray-500">
+    Você ainda não possui trilhas criadas.
+  </div>
+
+  <ul class="space-y-4">
+    <li th:each="trilha : ${trilhas}" class="p-4 border rounded-xl bg-base-100 shadow-sm">
+      <!-- Título da trilha -->
+      <div class="font-bold text-lg" th:text="${trilha.titulo}">Título da trilha</div>
+
+      <!-- Descrição gerada pela IA -->
+      <div class="text-gray-600 mt-1" th:text="${trilha.descricao}">Descrição da trilha</div>
+
+      <!-- Data de criação -->
+      <div class="text-sm text-gray-400 mt-1" th:text="${trilha.dataCriacao}">Data</div>
+
+      <!-- Etapas, se quiser mostrar -->
+      <ul class="mt-2 pl-4 list-disc">
+        <li th:each="etapa : ${trilha.etapas}" th:text="${etapa.nome}">Nome da etapa</li>
+      </ul>
+    </li>
+  </ul>
+
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>
