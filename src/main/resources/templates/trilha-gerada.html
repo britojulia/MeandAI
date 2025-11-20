@@ -1,94 +1,53 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="lofi">
+<html lang="en" data-theme="cmyk">
 <head>
     <meta charset="UTF-8">
-    <title>Trilha Gerada Dinamicamente</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" />
+    <title>Trilha Gerada pela IA</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+
     <style>
-        /* Chat com scroll e altura fixa */
-        #chat-messages {
-            max-height: 400px;
-            overflow-y: auto;
-            padding-right: 10px;
+        .ai-bubble {
+            background: rgba(0,0,0,0.03);
+            padding: 1.7rem;
+            border-radius: 14px;
+            line-height: 1.6rem;
+            font-size: 1.07rem;
+            white-space: pre-line;
+            border-left: 4px solid #9ca3af;
         }
     </style>
 </head>
-<body class="flex flex-col min-h-screen">
+
+<body class="flex flex-col min-h-screen bg-base-200">
 
 <div th:replace="~{fragments/layout :: header}"></div>
 
-<div class="container mx-auto px-4 py-10 flex flex-col gap-10">
+<div class="container mx-auto px-6 py-16 max-w-7xl flex flex-col gap-8">
 
-    <!-- Card da Trilha -->
-    <div class="card bg-base-100 shadow-xl p-8">
-        <h1 class="text-3xl font-bold mb-2" th:text="${trilha.titulo}">Título da Trilha</h1>
-        <p class="text-lg opacity-80" th:text="${trilha.descricao}">Descrição da trilha...</p>
-        <p class="mt-4 text-sm opacity-60">
-            Criada em: <span th:text="${trilha.dataCriacao}"></span>
-        </p>
-        <p class="mt-1 text-sm opacity-60">
-            Usuário: <span th:text="${trilha.user.name}"></span>
-        </p>
+    <!-- Título -->
+    <h1 class="text-5xl font-bold text-base-content">
+        Sua Trilha Personalizada
+    </h1>
+
+    <p class="text-lg text-base-content/70">
+        Gerada automaticamente pela nossa IA com base nas suas habilidades. Aqui você pode acompanhar as etapas sugeridas e se preparar para cada fase do seu aprendizado.
+    </p>
+
+    <div class="bg-base-100 border-l-4 border-primary shadow-lg p-8 rounded-xl whitespace-pre-line">
+        <span th:text="${respostaIA}"></span>
     </div>
 
-    <!-- Etapas da Trilha -->
-    <h2 class="text-2xl font-semibold mb-4">Etapas da Trilha</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div th:each="etapa : ${trilha.etapas}" class="card bg-base-100 shadow-md p-6 flex flex-col gap-3">
-            <h3 class="text-xl font-bold" th:text="${etapa.nome}">Nome da etapa</h3>
-            <p class="text-sm opacity-80" th:text="${etapa.descricao}">Descrição da etapa</p>
-            <div class="flex items-center gap-2 mt-2">
-                <input type="checkbox" class="checkbox checkbox-success" th:checked="${etapa.concluida}" disabled/>
-                <span class="text-sm" th:text="${etapa.concluida ? 'Concluída' : 'Pendente'}"></span>
-            </div>
-        </div>
-    </div>
+    <a href="/trilha" class="btn btn-info w-32 mt-4 hover:border-primary hover:bg-transparent hover:text-primary
+    transition-colors duration-300">
+        Voltar
+    </a>
 
-    <!-- Chat com a IA -->
-    <div class="card bg-base-100 shadow-md p-6 mt-10 flex flex-col gap-4">
-        <h2 class="text-2xl font-semibold mb-2">Converse com a IA</h2>
-        <p class="text-sm text-base-content/70">Peça sugestões ou ajuste as etapas da trilha.</p>
-
-        <div id="chat-messages" class="flex flex-col gap-3">
-            <div th:each="msg : ${chatMessages}">
-                <div th:if="${msg.sender == 'user'}"
-                     class="self-end bg-primary text-primary-content p-2 rounded-lg max-w-xs break-words">
-                    <span th:text="${msg.content}"></span>
-                </div>
-                <div th:if="${msg.sender == 'ai'}"
-                     class="self-start bg-base-200 text-base-content p-2 rounded-lg max-w-xs break-words">
-                    <span th:text="${msg.content}"></span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Formulário do chat -->
-        <form th:action="@{/trilha/chat}" method="post" class="flex gap-2 mt-4">
-            <input type="hidden" name="userId" th:value="${trilha.user.id}" />
-            <input type="text" name="message" placeholder="Digite sua mensagem..."
-                   class="input input-bordered flex-1" required />
-            <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>
-    </div>
-
-    <!-- Botão voltar -->
-    <div class="mt-4">
-        <a href="/trilha" class="btn btn-outline">Voltar</a>
-    </div>
 
 </div>
 
 <div th:replace="~{fragments/footer :: footer}"></div>
-
-<script>
-    // Scroll automático para a última mensagem
-    const chatMessages = document.getElementById('chat-messages');
-    if (chatMessages) {
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-</script>
 
 </body>
 </html>

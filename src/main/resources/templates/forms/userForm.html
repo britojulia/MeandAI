@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="cmyk">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -12,23 +12,29 @@
 
 <div th:replace="~{fragments/layout :: header}"></div>
 
-<div class="max-w-xl mx-auto p-6">
-
-    <h1 class="text-3xl font-bold mb-6" th:text="#{user.create.title}"></h1>
+<div class="max-w-xl mx-auto p-6 flex-1">
 
     <form action="/user" method="post" class="flex flex-col gap-4">
 
+        <h2 class="text-2xl font-bold mb-2" th:text="#{user.create.title}"></h2>
+
+        <p class="text-sm text-base-content/70 mb-4" th:text="#{user.create.description}">
+        </p>
+
         <input type="text" name="nome"
                th:placeholder="#{user.create.placeholder.name}"
-               class="input input-bordered w-full" required>
+               class="input input-bordered w-full"
+               required>
 
         <input type="text" name="areaAtual"
                th:placeholder="#{user.create.placeholder.areaAtual}"
-               class="input input-bordered w-full" required>
+               class="input input-bordered w-full"
+               required>
 
         <input type="text" name="objetivo"
                th:placeholder="#{user.create.placeholder.objetivo}"
-               class="input input-bordered w-full" required>
+               class="input input-bordered w-full"
+               required>
 
         <button class="btn btn-primary w-full" th:text="#{save}"></button>
     </form>

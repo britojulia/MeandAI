@@ -28,6 +28,7 @@ public class SkillController {
     public String formSkill(@PathVariable Long userId, Model model) {
         int totalSkills = skillService.countSkillsByUser(userId);
 
+        model.addAttribute("skills", skillService.findByUserId(userId));
         model.addAttribute("skill", new Skill());
         model.addAttribute("userId", userId);
         model.addAttribute("count", totalSkills);
@@ -47,9 +48,8 @@ public class SkillController {
         if (totalSkills < 3) {
             return "redirect:/skill/formSkill/" + userId;
         }
-        // Já tem 3 skills, vai para a próxima etapa da trilha
         redirect.addFlashAttribute("message", messageHelper.get("message.success"));
-        return "redirect:/trilha/gerar/" + userId;
+        return "redirect:/skill/formSkill/" + userId;
     }
 
     @DeleteMapping("{id}")

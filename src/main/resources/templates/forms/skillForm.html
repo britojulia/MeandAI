@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="cmyk">
 <head>
   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -12,40 +12,63 @@
 
 <div th:replace="~{fragments/layout :: header}"></div>
 
-<div class="max-w-xl mx-auto p-6">
+<div class="max-w-xl mx-auto p-6 flex-1">
 
-  <h1 class="text-2xl font-bold mb-4" th:text="#{skill.add.title}"></h1>
-  <h3 class="" th:text="#{skill.number.info}"></h3>
-
+  <!-- Mensagem de sucesso -->
   <div th:if="${message}"
        class="alert alert-success shadow-lg mx-4 my-6 rounded-xl border border-success/30 bg-success/10 text-success">
     <span th:text="${message}"></span>
   </div>
 
-  <form th:action="@{'/skill?userId=' + ${userId}}" method="post" class="flex flex-col gap-4">
 
-    <!-- Nome da Skill -->
+  <h1 class="text-2xl font-bold mb-4" th:text="#{skill.add.title}"></h1>
+
+  <p class="text-base text-gray-600 mb-4" th:text="#{skill.add.description}"></p>
+
+  <h3 class="font-semibold mb-2" th:text="#{skill.number.info}"></h3>
+
+  <form th:action="@{'/skill?userId=' + ${userId}}" method="post" class="flex flex-col gap-4" th:if="${count < 3}">
+
     <input type="text" name="nome"
            th:placeholder="#{skill.add.placeholder}"
            class="input input-bordered w-full"
            required />
 
-    <!-- Selecionar Nível -->
     <select name="nivel" class="select select-bordered w-full" required>
-      <option value="" disabled selected>Selecione o nível</option>
+      <option value="" disabled selected th:text="#{skill.list.level}"></option>
       <option value="INICIANTE">Iniciante</option>
       <option value="INTERMEDIARIO">Intermediário</option>
       <option value="AVANÇADO">Avançado</option>
     </select>
 
-    <button class="btn btn-success w-full" th:text="#{skill.add.button.save}"></button>
+    <button class="btn btn-success w-full"
+            th:text="#{skill.add.button.save}"
+            th:if="${count < 3}">
+    </button>
   </form>
 
-  <a th:href="@{'/trilha/gerar/' + ${userId}}"
-     class="btn btn-outline w-full mt-4"
-     th:text="#{skill.add.continue}">
-  </a>
 
+  <div class="mt-8">
+    <h2 class="text-xl font-bold mb-3" th:text="#{skill.list.title}"></h2>
+
+    <div th:if="${skills.size() == 0}" class="text-gray-500" th:text="#{skill.list.empty}"></div>
+
+    <ul class="space-y-3" th:if="${skills.size() > 0}">
+      <li th:each="skill : ${skills}" class="p-4 border border-base-300 rounded-xl bg-base-100 shadow-sm">
+        <div class="font-semibold text-lg" th:text="${skill.nome}"></div>
+        <div class="text-sm text-gray-600">
+          Nível: <span th:text="${skill.nivel}"></span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+
+  <a th:href="@{'/trilha/gerar/' + ${userId}}"
+     class="btn btn-info w-full mt-6 font-bold"
+     th:text="#{skill.add.continue}"
+     th:if="${count >= 3}">
+  </a>
 
 </div>
 

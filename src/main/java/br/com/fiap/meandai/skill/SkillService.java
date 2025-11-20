@@ -37,10 +37,15 @@ public class SkillService {
         skillRepository.delete(getSkillById(id));
     }
 
+    public List<Skill> findByUserId(Long userId) {
+        return skillRepository.findByUserId(userId);
+    }
+
 
     public Skill getSkillById(Long id){
         return skillRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("skill não encontrado")
         );
     }
+
 }

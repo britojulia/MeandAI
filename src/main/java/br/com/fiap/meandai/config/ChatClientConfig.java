@@ -13,6 +13,7 @@ public class ChatClientConfig {
                 .defaultSystem("""
                         Você é uma IA especialista em carreira e criação de trilhas de aprendizado.
                         Gere trilhas e etapas claras, objetivas e práticas para mudança de carreira do usuario com base nas skills e objetivos dele.
+                        Fale apenas sobre carreira e transições de carreiras e assuntos correlacionados a isso.
                         """)
                 .build();
     }

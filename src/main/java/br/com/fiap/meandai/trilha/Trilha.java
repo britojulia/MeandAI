@@ -24,6 +24,9 @@ public class Trilha {
     private String descricao;// Ex: "Trilha de Transição para Tech"
     private LocalDate dataCriacao;
 
+    @Column(columnDefinition = "TEXT")
+    private String conteudoGeradoIA; // texto inteiro da resposta da IA
+
     @ManyToOne
     private User user;
 

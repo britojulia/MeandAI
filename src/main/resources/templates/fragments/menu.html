@@ -9,28 +9,16 @@
 </head>
 <body>
 <div th:fragment="menuContent">
-  <ul class="menu bg-base-200 rounded-box min-h-screen w-full p-4">
-  <li>
-    <a>Solutions</a>
-    <ul>
-      <li><a>Design</a></li>
+  <nav class="navbar bg-base-200 shadow">
+      <ul class="menu bg-base-200 rounded-box min-h-screen w-full p-4">
+        <li><a href="/index" th:text="#{menu.inicio}"></a></li>
+        <li><a href="/trilhas" th:text="#{menu.trilhas}"></a></li>
+        <li><a href="/etapas" th:text="#{menu.etapas}"></a></li>
+        <li><a href="/chat" th:text="#{menu.chat}"></a></li>
+        <li><a href="/about-us" th:text="#{menu.aboutus}"></li>
     </ul>
-  </li>
-  <li>
-    <a>Enterprise</a>
-    <ul>
-      <li><a>CRM software</a></li>
-    </ul>
-  </li>
-  <li>
-    <a>Products</a>
-    <a>Company</a>
-    <ul>
-      <li><a>About us</a></li>
-      <li><a>Contact us</a></li>
-    </ul>
-  </li>
-</ul>
+  </nav>
 </div>
+
 </body>
 </html>
