@@ -11,25 +11,25 @@
 <body class="flex flex-col min-h-screen">
 
 <!-- Header -->
-
 <div th:replace="~{fragments/layout :: header}"></div>
 
 
 <div class="p-6 max-w-6xl mx-auto">
 
     <div class="mb-8">
-        <h1 class="text-3xl  font-extrabold tracking-tight" th:text="#{home.header.hello}">
+        <h1 class="text-4xl font-extrabold tracking-tight" th:text="#{home.header.hello}">
              <span >Usuário 👋</span>
         </h1>
-        <p class="text-base-content/70 mt-1" th:text="#{home.header.ready}">
+        <p class="text-lg text-base-content/70 mt-1" th:text="#{home.header.ready}">
         </p>
     </div>
 
+
     <!-- card principal-->
-    <div class="card bg-gray-400 text-primary-content shadow-xl mb-10 hover:shadow-2xl transition">
+    <div class="card bg-gray-300 text-primary-content shadow-xl mb-10 hover:shadow-2xl transition">
         <div class="card-body">
             <h2 class="card-title text-2xl font-bold text-primary" th:text="#{home.maincard.title}"></h2>
-            <p class="text-primary" th:text="#{home.maincard.description}"></p>
+            <p class="text-base text-base-content/70 mt-2" th:text="#{home.maincard.description}"></p>
             <div class="card-actions justify-end">
                 <a href="user/form" class="btn btn-secondary btn-md hover:border-blue-600 hover:bg-transparent hover:text-pink-600transition" th:text="#{home.maincard.button}">
                 </a>
@@ -64,25 +64,20 @@
         <!-- progresso -->
         <div class="card bg-base-100 shadow-md hover:shadow-lg transition">
             <div class="card-body space-y-4">
-                <!-- Título principal -->
                 <h2 class="card-title text-2xl font-bold text-primary" th:text="#{home.progress.title}"></h2>
 
-                <!-- Descrição -->
                 <p class="text-base text-base-content/70" th:text="#{home.progress.description}"></p>
 
-                <!-- Lista de trilhas -->
                 <ul class="space-y-6">
                     <li th:each="trilha : ${trilhas}" class="space-y-2">
-                        <!-- Título da trilha -->
+
                         <h3 class="text-lg font-semibold text-neutral" th:text="${trilha.titulo}"></h3>
 
-                        <!-- Contagem de etapas -->
                         <p class="text-sm text-gray-500">
                             <span th:text="${etapasConcluidas[trilha.id] ?: 0}"></span> /
                             <span th:text="${etapasTotais[trilha.id] ?: 0}"></span> etapas concluídas
                         </p>
 
-                        <!-- Barra de progresso -->
                         <progress class="progress progress-primary w-full h-3 rounded-lg"
                                   th:value="${etapasConcluidas[trilha.id] ?: 0}"
                                   th:max="${etapasTotais[trilha.id] ?: 1}">
@@ -101,15 +96,13 @@
 
     </div>
 
-
-
-    <!-- FRASE FINAL -->
+    <!-- frase final -->
     <h4 class="mt-14 text-center text-base-content/60 text-sm" th:text="#{home.footer.phrase}">
     </h4>
 
 </div>
 
-<!-- FOOTER -->
+<!-- footer -->
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

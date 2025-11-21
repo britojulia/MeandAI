@@ -43,7 +43,14 @@ public class TrilhaController {
     @GetMapping("/lista")
     public String listarTrilhas(Model model) {
         List<Trilha> trilhas = trilhaRepository.findAll();
+
+
+        Map<Long, Long> etapasConcluidas = etapaService.contarEtapasConcluidasPorTrilha();
+        Map<Long, Long> etapasTotais = etapaService.contarEtapasTotaisPorTrilha();
+
         model.addAttribute("trilhas", trilhas);
+        model.addAttribute("etapasConcluidas", etapasConcluidas);
+        model.addAttribute("etapasTotais", etapasTotais);
         return "trilhas-lista";
     }
 

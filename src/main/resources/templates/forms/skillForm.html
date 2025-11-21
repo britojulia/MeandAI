@@ -47,6 +47,7 @@
             th:text="#{skill.add.button.save}"
             th:if="${count < 3}">
     </button>
+
   </form>
 
 
@@ -75,17 +76,17 @@
           </li>
         </ul>
 
+
       </li>
     </ul>
 
+    <a th:href="@{'/trilha/gerar/' + ${userId}}"
+       class="btn btn-info w-full mt-6 font-bold"
+       th:text="#{skill.add.continue}"
+       th:if="${count >= 3}">
+    </a>
+
   </div>
-
-
-  <a th:href="@{'/trilha/gerar/' + ${userId}}"
-     class="btn btn-info w-full mt-6 font-bold"
-     th:text="#{skill.add.continue}"
-     th:if="${count >= 3}">
-  </a>
 
 </div>
 
