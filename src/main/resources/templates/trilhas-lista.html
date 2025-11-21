@@ -22,28 +22,24 @@
   </div>
 
 
-  <!-- Título -->
   <div class="flex justify-between items-center">
     <h1 class="text-4xl font-extrabold tracking-tight" th:text="#{home.trilhas.title}"></h1>
   </div>
 
   <!-- Nenhuma trilha -->
   <div th:if="${trilhas.size() == 0}"
-       class="text-gray-500 text-center text-lg py-10 opacity-75">
-    Você ainda não possui trilhas criadas.
+       class="text-gray-500 text-center text-lg py-10 opacity-75" th:text="#{trilhas.none}">
   </div>
 
-  <!-- Lista de trilhas -->
+
   <ul class="space-y-4">
     <li th:each="trilha : ${trilhas}">
       <div class="relative flex justify-between items-center p-4 border border-base-300 rounded-lg hover:bg-base-200 transition">
 
-        <!-- Badge de progresso no topo -->
         <span class="absolute top-0 right-4 translate-x-1/2 -translate-y-1/2 badge badge-primary"
               th:text="${etapasConcluidas[trilha.id] ?: 0} + ' / ' + ${etapasTotais[trilha.id] ?: 0}">
         </span>
 
-        <!-- Título e descrição -->
         <div class="flex-1">
           <h3 class="font-semibold text-lg" th:text="${trilha.titulo}"></h3>
           <p class="text-sm text-gray-600" th:text="${trilha.descricao}"></p>

@@ -68,6 +68,11 @@
 
                 <p class="text-base text-base-content/70" th:text="#{home.progress.description}"></p>
 
+                <!-- Nenhuma trilha -->
+                <div th:if="${trilhas.size() == 0}"
+                     class="text-gray-500 text-center text-base py-10 opacity-75" th:text="#{trilhas.none}">
+                </div>
+
                 <ul class="space-y-6">
                     <li th:each="trilha : ${trilhas}" class="space-y-2">
 
