@@ -5,6 +5,8 @@ import br.com.fiap.meandai.user.UserService;
 import lombok.RequiredArgsConstructor;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,14 +26,12 @@ public class ChatController {
     private final UserService userService;
 
     @GetMapping
-    public String abrirChat(@RequestParam(required = false) Long userId,
-                            Model model,
-                            HttpSession session) {
+    public String abrirChat(Model model,
+                            HttpSession session,
+                            @AuthenticationPrincipal OAuth2User principal) {
 
-        if (userId != null) {
-            User user = userService.getUserById(userId);
+            User user = userService.register(principal);
             model.addAttribute("user", user);
-        }
 
         // cria histórico se não existir
         if (session.getAttribute("historico") == null) {
@@ -42,14 +42,15 @@ public class ChatController {
     }
 
     @PostMapping
-    public String enviarMensagem(@RequestParam Long userId,
-                                 @RequestParam String mensagem,
+    public String enviarMensagem(@RequestParam String mensagem,
                                  Model model,
-                                 HttpSession session) {
+                                 HttpSession session,
+                                 @AuthenticationPrincipal OAuth2User principal) {
 
-        User user = userService.getUserById(userId);
+        User user = userService.register(principal);
+        model.addAttribute("user", user);
 
-        // Recupera histórico sem warnings
+        // Recupera histórico
         Object historicoObj = session.getAttribute("historico");
         List<Chat> historico;
 

@@ -1,5 +1,7 @@
 package br.com.fiap.meandai.user;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.ui.Model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,22 +17,31 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public String index(Model model) {
-        var users = userService.getAllUsers();
-        model.addAttribute("users", users);
+    public String index(Model model,
+                        @AuthenticationPrincipal OAuth2User principal) {
+        User user = userService.register(principal);
+        model.addAttribute("user", user);
         return "index";
     }
 
     @GetMapping("/form")
-    public String form(Model model) {
-        model.addAttribute("user", new User());
+    public String form(Model model,
+                       @AuthenticationPrincipal OAuth2User principal) {
+        User user = userService.register(principal);
+        model.addAttribute("user", user);
         return "forms/userForm";
     }
 
     @PostMapping
-    public String save(@Valid User user) {
-        User savedUser = userService.save(user);
-        return "redirect:/skill/formSkill/" + savedUser.getId();
+    public String save(@AuthenticationPrincipal OAuth2User principal,
+                       @Valid User user) {
+        User savedUser = userService.register(principal);
+
+        savedUser.setAreaAtual(user.getAreaAtual());
+        savedUser.setObjetivo(user.getObjetivo());
+
+        userService.save(savedUser);
+        return "redirect:/skill/formSkill" ;
     }
 
 

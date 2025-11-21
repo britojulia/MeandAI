@@ -1,5 +1,6 @@
 package br.com.fiap.meandai.etapa;
 
+import br.com.fiap.meandai.user.User;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -26,14 +27,14 @@ public class EtapaService {
         etapaRepository.delete(getEtapaById(id));
     }
 
-    public Etapa concluir(Long id) {
+    public Etapa concluir(Long id, User user) {
         Etapa etapa = etapaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Etapa não encontrada"));
         etapa.setConcluida(true);
         return etapaRepository.save(etapa);
     }
 
-    public Etapa naoConcluida(Long id) {
+    public Etapa naoConcluida(Long id, User user) {
         Etapa etapa = etapaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Etapa não encontrada"));
         etapa.setConcluida(false);

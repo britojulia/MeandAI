@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @Entity
 @Table(name = "userAI")
@@ -32,19 +33,17 @@ public class User {
 
     private String avatarUrl;
 
-    @NotBlank(message = "{user.areaAtual.notblank}")
     private String areaAtual; // Ex: "Marketing"
 
-    @NotBlank(message = "{user.objetivo.notblank}")
-    private String objetivo;  // Ex: "Migrar para Tecnologia"
-
+    private String objetivo;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Trilha> trilhas;
 
-    public User(String name, String email) {
-        this.name = name;
-        this.email = email;
+    public User(OAuth2User principal) {
+        this.name = principal.getAttributes().get("name").toString();
+        this.email = principal.getAttributes().get("email").toString();
+        this.avatarUrl = principal.getAttributes().get("avatar_url").toString();
     }
 }

@@ -5,6 +5,8 @@ import br.com.fiap.meandai.etapa.EtapaService;
 import br.com.fiap.meandai.user.User;
 import br.com.fiap.meandai.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +27,9 @@ public class TrilhaController {
     private final EtapaService etapaService;
 
     @GetMapping
-    public String index(Model model) {
+    public String index(Model model,
+                        @AuthenticationPrincipal OAuth2User principal) {
+        User user = userService.register(principal);
         var trilhas = trilhaService.getAllTrilhas();
 
         Map<Long, Long> etapasConcluidas = etapaService.contarEtapasConcluidasPorTrilha();
@@ -34,14 +38,17 @@ public class TrilhaController {
         model.addAttribute("trilhas", trilhas);
         model.addAttribute("etapasConcluidas", etapasConcluidas);
         model.addAttribute("etapasTotais", etapasTotais);
+        model.addAttribute("user", user);
 
         return "index";
     }
 
 
-    //todas as trilhas
+    //lista completa de trilhas
     @GetMapping("/lista")
-    public String listarTrilhas(Model model) {
+    public String listarTrilhas(Model model,
+                                @AuthenticationPrincipal OAuth2User principal) {
+        User user = userService.register(principal);
         List<Trilha> trilhas = trilhaRepository.findAll();
 
 
@@ -51,13 +58,15 @@ public class TrilhaController {
         model.addAttribute("trilhas", trilhas);
         model.addAttribute("etapasConcluidas", etapasConcluidas);
         model.addAttribute("etapasTotais", etapasTotais);
+        model.addAttribute("user", user);
         return "trilhas-lista";
     }
 
-    //gera a trilha sem salvar
-    @GetMapping("/gerar/{userId}")
-    public String gerarTrilhaDinamica(@PathVariable Long userId, Model model) {
-        User user = userService.getUserById(userId);
+    //gerar a trilha dinâmica  sem salvar
+    @GetMapping("/gerar")
+    public String gerarTrilhaDinamica(Model model,
+                                      @AuthenticationPrincipal OAuth2User principal) {
+        User user = userService.register(principal);
         var resultado = trilhaService.gerarEtapasComIA(user);
 
         model.addAttribute("respostaIA", resultado.conteudo());
@@ -67,26 +76,30 @@ public class TrilhaController {
     }
 
     //salva a trilha com as etapas separadas
-    @PostMapping("/{userId}")
-    public String criarTrilha(@PathVariable Long userId, Model model, RedirectAttributes redirect) {
-        Trilha trilha = trilhaService.createTrilha(userId); // retorna Trilha completa
+    @PostMapping()
+    public String criarTrilha(Model model,
+                              RedirectAttributes redirect,
+                              @AuthenticationPrincipal OAuth2User principal) {
+        User user = userService.register(principal);
+        Trilha trilha = trilhaService.createTrilha(user.getId());
 
         // adiciona a trilha no model para exibir na página
         model.addAttribute("trilha", trilha);
-
+        model.addAttribute("user", user);
         redirect.addFlashAttribute("message", messageHelper.get("message.success"));
 
-        // redireciona para a página de detalhes da trilha
         return "redirect:/trilha/" + trilha.getId();
     }
 
     @GetMapping("/{id}")
-    public String detalhesTrilha(@PathVariable Long id, Model model) {
+    public String detalhesTrilha(@PathVariable Long id, Model model,
+                                 @AuthenticationPrincipal OAuth2User principal) {
+        User user = userService.register(principal);
         Trilha trilha = trilhaService.getTrilhaById(id);
         model.addAttribute("trilha", trilha);
+        model.addAttribute("user", user);
         return "trilha-detalhes";
     }
-
 
 
     @DeleteMapping("{id}")
