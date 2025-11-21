@@ -76,7 +76,8 @@ public class ChatController {
         String prompt = """
         Você é uma IA especialista em carreira.
         Responda com até 8 linhas e de forma amigável.
-        Só use caracteres simples e números.
+        Só use caracteres simples, acentos, ç e números.
+        Não use * #
         Histórico:
         %s
         Responda a última mensagem.
