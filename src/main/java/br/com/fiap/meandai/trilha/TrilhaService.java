@@ -53,6 +53,7 @@ public class TrilhaService {
         Gere uma trilha personalizada de aprendizado com base nas habilidades do usuário abaixo e o objetivo de carreira dele.
         Nessa trilha, você deve dar instruções claras sobre o passo a passo, e separar por etapas.
         Retorne apenas o texto final, sem formatação JSON e sem caracteres * #.
+        A primeira linha da trilha deverá ser o título da trilha.
 
         Usuário: %s
         Habilidades: %s
@@ -67,63 +68,6 @@ public class TrilhaService {
         return new ResultadoIA(respostaIA);
     }
 
-
-
-//    public List<String> gerarEtapasComIA(User user) {
-//        String prompt = """
-//                Crie uma trilha de aprendizado PARA ESTE USUÁRIO:
-//
-//                Área atual: %s
-//                Objetivo profissional: %s
-//                Skills que ele já possui: %s
-//
-//                Gere uma lista de 5 a 8 etapas.
-//                Responda APENAS com os nomes das etapas, uma por linha.
-//                """.formatted(
-//                user.getAreaAtual(),
-//                user.getObjetivo(),
-//                user.getTrilhas()
-//        );
-//
-//        String resposta = chatClient
-//                .prompt()
-//                .user(prompt)
-//                .call()
-//                .content();
-//
-//        return resposta.lines()
-//                .map(String::trim)
-//                .filter(s -> !s.isEmpty())
-//                .toList();
-//    }
-
-//    public Trilha createTrilha(Long userId) {
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
-//
-//        Trilha trilha = Trilha.builder()
-//                .titulo("Trilha Personalizada")
-//                .descricao("Trilha criada automaticamente pela IA")
-//                .dataCriacao(LocalDate.now())
-//                .user(user)
-//                .build();
-//
-//        trilha = trilhaRepository.save(trilha);
-//        List<String> etapasGeradas = gerarEtapasComIA(user);
-//
-//        for (String nome : etapasGeradas) {
-//            Etapa etapa = Etapa.builder()
-//                    .nome(nome)
-//                    .descricao("Etapa sugerida pela IA")
-//                    .concluida(false)
-//                    .trilha(trilha)
-//                    .build();
-//            etapaRepository.save(etapa);
-//        }
-//
-//        publisher.sendTrilhaCreated(trilha);
-//        return trilha;
-//    }
 
     public Trilha createTrilha(Long userId) {
 
@@ -177,7 +121,6 @@ public class TrilhaService {
         publisher.sendTrilhaCreated(trilha);
         return trilha;
     }
-
 
 
     public void deleteById(Long id){

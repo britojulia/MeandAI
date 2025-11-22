@@ -6,7 +6,4 @@ public class TypesEnum {
         INICIANTE, INTERMEDIARIO, AVANÇADO
     }
 
-    public enum UserRole{
-            ADMIN, USER
-    }
 }
