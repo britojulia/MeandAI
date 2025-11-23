@@ -53,7 +53,7 @@ A partir disso, a IA gera automaticamente uma **trilha personalizada de aprendiz
 ### Deploy
 ### 1. A aplicação está disponível em:
 ```bash
-.
+https://meandai.onrender.com/login
 ```
 > Não é necessário configurar variáveis de ambiente localmente, elas já devem estar definidas.
 
@@ -62,7 +62,7 @@ A partir disso, a IA gera automaticamente uma **trilha personalizada de aprendiz
 ### 1. Clone o repositório
 ```bash
 git clone https://github.com/britojulia/MeandAI.git
-cd trackin
+cd MeandAI
 ```
 
 ### 2. Abra o Docker Desktop
@@ -94,7 +94,7 @@ GOOGLE_SECRET
 ## 🎥 Pitch e Demonstração da Solução
 
 * 🔗 Pitch:
-* 🎮 Vídeo da solução completa:
+* 🎮 Vídeo da solução completa: https://youtu.be/_NYXZtUaZFk
 
 ##  Desenvolvido por:
 Julia Brito, Leandro Correia, Victor Antonopoulos - 2TDSPG
