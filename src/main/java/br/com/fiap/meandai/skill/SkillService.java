@@ -25,7 +25,7 @@ public class SkillService {
     public Skill save(Skill skill, Long userId) {
         var user = userRepository.findById(userId).orElseThrow();
         skill.setUser(user);
-        publisher.sendTrilhaCreated(skill);
+        publisher.sendSkillCreated(skill);
         return skillRepository.save(skill);
     }
 
