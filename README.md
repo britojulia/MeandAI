@@ -93,7 +93,7 @@ GOOGLE_SECRET
 
 ## 🎥 Pitch e Demonstração da Solução
 
-* 🔗 Pitch:
+* 🔗 Pitch: https://www.youtube.com/watch?v=Twz6g6PGYIM
 * 🎮 Vídeo da solução completa: https://youtu.be/rDH0h4ZdFy4?si=bXfeNTkJ_Qj6g9KC
 
 ##  Desenvolvido por:
