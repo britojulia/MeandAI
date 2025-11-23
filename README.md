@@ -94,7 +94,7 @@ GOOGLE_SECRET
 ## 🎥 Pitch e Demonstração da Solução
 
 * 🔗 Pitch:
-* 🎮 Vídeo da solução completa: https://youtu.be/_NYXZtUaZFk
+* 🎮 Vídeo da solução completa: https://youtu.be/rDH0h4ZdFy4?si=bXfeNTkJ_Qj6g9KC
 
 ##  Desenvolvido por:
 Julia Brito, Leandro Correia, Victor Antonopoulos - 2TDSPG
